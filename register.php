@@ -1,6 +1,10 @@
 <?php
 include 'config.php';
 
+$stmt = $pdo->prepare("INSERT INTO users (nome, email, senha) VALUES (?, ?, ?)");
+$stmt->execute([$nome, $email, $hash]);
+
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $nome = $_POST['nome'];
     $email = $_POST['email'];
