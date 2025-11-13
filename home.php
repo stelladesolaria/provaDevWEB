@@ -5,18 +5,19 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-include 'config.php';
-// aq usamos o crud implementado
+require 'config.php'; 
 
+// ---- CRIAR PRODUTO ----
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['nome'])) {
-    $nome = $_POST['nome'];
+    $nome  = $_POST['nome'];
     $preco = $_POST['preco'];
-    $stmt = $conn->prepare("INSERT INTO produtos (nome, preco) VALUES (?, ?)");
+
+    $stmt = $pdo->prepare("INSERT INTO produtos (nome, preco) VALUES (?, ?)");
     $stmt->execute([$nome, $preco]);
 }
 
-
-$produtos = $conn->query("SELECT * FROM produtos");
+// ---- LISTAR PRODUTOS ----
+$produtos = $pdo->query("SELECT * FROM produtos");
 ?>
 
 <h2>Bem-vindo, <?= htmlspecialchars($_SESSION['nome']) ?>!</h2>

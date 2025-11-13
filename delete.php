@@ -1,13 +1,18 @@
 <?php
-session_start();
-if (!isset($_SESSION['user_id'])) header("Location: index.php");
-include 'config.php';
+require 'config.php'; 
 
-$id = $_GET['id'] ?? null;
-if ($id) {
+if (!isset($_GET['id'])) {
+    die("ID inválido!");
+}
+
+$id = $_GET['id'];
+
+try {
     $stmt = $conn->prepare("DELETE FROM produtos WHERE id = ?");
     $stmt->execute([$id]);
+
+    header("Location: home.php");
+    exit;
+} catch (PDOException $e) {
+    echo "Erro ao excluir: " . $e->getMessage();
 }
-header("Location: home.php");
-exit;
-?>

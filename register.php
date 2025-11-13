@@ -1,24 +1,24 @@
 <?php
-include 'config.php';
-
-$stmt = $pdo->prepare("INSERT INTO users (nome, email, senha) VALUES (?, ?, ?)");
-$stmt->execute([$nome, $email, $hash]);
-
+require 'config.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $nome = $_POST['nome'];
-    $email = $_POST['email'];
-    $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
+    $nome  = $_POST['nome'] ?? '';
+    $email = $_POST['email'] ?? '';
+    $senha = $_POST['senha'] ?? '';
+
+    
+    $hash = password_hash($senha, PASSWORD_DEFAULT);
 
     try {
-        $stmt = $conn->prepare("INSERT INTO users (nome, email, senha) VALUES (?, ?, ?)");
-        $stmt->execute([$nome, $email, $senha]);
-        echo "Usuário cadastrado com sucesso! <a href='index.php'>Fazer login</a>";
+        $stmt = $pdo->prepare("INSERT INTO users (nome, email, senha) VALUES (?, ?, ?)");
+        $stmt->execute([$nome, $email, $hash]);
+        echo "Usuário cadastrado com sucesso!";
     } catch (PDOException $e) {
         echo "Erro ao cadastrar: " . $e->getMessage();
     }
 }
 ?>
+
 
 <h2>Cadastro de Usuário</h2>
 <form method="POST">
