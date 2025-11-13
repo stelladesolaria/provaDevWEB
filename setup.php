@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS produtos (
 
 try {
     $pdo->exec($sql);
-    echo "✅ Banco de dados e tabelas criados com sucesso!";
+    echo " Banco de dados e tabelas criados com sucesso!";
 } catch (PDOException $e) {
     echo "Erro ao criar tabelas: " . $e->getMessage();
 }
